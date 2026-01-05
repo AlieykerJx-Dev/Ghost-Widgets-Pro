@@ -1,0 +1,8 @@
+{
+    "lang": "es",
+    "bg": "assets/backgrounds/main_bg.jpg",
+    "theme_color": "#3498db",
+    "opacity": 0.9,
+    "edit_mode": false,
+    "first_run": true
+}

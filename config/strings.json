@@ -1,0 +1,18 @@
+{
+    "es": {
+        "btn_add": "Añadir Widget",
+        "btn_edit": "Modo Edición",
+        "btn_save": "Guardar Todo",
+        "status_active": "ACTIVOS",
+        "tray_open": "Abrir Panel",
+        "tray_exit": "Salir Totalmente"
+    },
+    "en": {
+        "btn_add": "Add Widget",
+        "btn_edit": "Edit Mode",
+        "btn_save": "Save All",
+        "status_active": "ACTIVE",
+        "tray_open": "Open Panel",
+        "tray_exit": "Exit"
+    }
+}
