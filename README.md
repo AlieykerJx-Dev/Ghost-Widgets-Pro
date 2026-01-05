@@ -1,6 +1,13 @@
 # 👻 Ghost Widgets Pro v1.1
 **Desarrollado por AlieykerJx**
 
+## 🛠️ Instalación en Linux Mint / Ubuntu
+1. Descarga el archivo `.deb` desde la sección de **Releases**.
+2. Haz doble clic en el archivo o ejecuta en la terminal:
+   ```bash
+   sudo dpkg -i GhostWidgetsPro_v1.1_amd64.deb
+   sudo apt install -f
+   
 Ghost Widgets es una herramienta de personalización de alto rendimiento para Linux que permite integrar contenido web (HTML/CSS/JS) directamente en tu escritorio con un consumo de recursos mínimo.
 
 ---
