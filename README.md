@@ -3,6 +3,9 @@ Desarrollado por AlieykerJx-Dev
 
 "Si no existía en Linux, lo creamos. Una solución real para streamers y gamers de la mano de un usuario que se atrevió a cambiar."
 
+<img width="458" height="914" alt="Screenshot_20260105_123928" src="https://github.com/user-attachments/assets/101fdb79-2e13-4266-9928-85b0d56797c3" />
+<img width="470" height="926" alt="Screenshot_20260105_124038" src="https://github.com/user-attachments/assets/f7e0c236-8c28-430c-b7e2-39f7f7f13718" />
+
 🚀 ¿Qué es Ghost Widgets Pro?
 Es una herramienta de personalización de alto rendimiento diseñada para integrar contenido web (HTML/CSS/JS) directamente en tu escritorio. Perfecta para chats de Twitch, alertas, relojes y monitores de sistema, todo con transparencia real y sin afectar tus FPS.
 
