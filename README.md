@@ -1,38 +1,30 @@
-# 👻 Ghost Widgets Pro v1.1
-**Desarrollado por AlieykerJx**
+# 👻 Ghost Widgets Pro v1.2 (Estable)
 
-## 🛠️ Instalación en Linux Mint / Ubuntu
-1. Descarga el archivo `.deb` desde la sección de **Releases**.
-2. Haz doble clic en el archivo o ejecuta en la terminal:
-   ```bash
-   sudo dpkg -i GhostWidgetsPro_v1.1_amd64.deb
-   sudo apt install -f
-   
-Ghost Widgets es una herramienta de personalización de alto rendimiento para Linux que permite integrar contenido web (HTML/CSS/JS) directamente en tu escritorio con un consumo de recursos mínimo.
+![Versión](https://img.shields.io/badge/Versión-v1.2_Estable-ghostwhite?style=for-the-badge&logo=ghost&labelColor=black)
+![Plataforma](https://img.shields.io/badge/Plataforma-Linux-orange?style=for-the-badge&logo=linux)
+![Estado](https://img.shields.io/badge/Estado-Funcional_100%25-brightgreen?style=for-the-badge)
+
+**Desarrollado por AlieykerJx-Dev**
+
+> "Si no existía en Linux, lo creamos. Una solución real para streamers y gamers de la mano de un usuario que se atrevió a cambiar."
 
 ---
 
-## 🚀 Características
-- **Motor Ultraligero:** Optimizado para procesadores de bajos recursos (Celeron/Atom).
-- **Modo Ghost:** Widgets transparentes que no interfieren con tus clics.
-- **Auto-Lanzador:** Crea accesos directos automáticamente al ejecutarlo.
-- **Multi-idioma:** Soporte para Español, Inglés y Portugués.
+## 🚀 ¿Qué es Ghost Widgets Pro?
+Es una herramienta de personalización de alto rendimiento diseñada para integrar contenido web (HTML/CSS/JS) directamente en tu escritorio. Perfecta para chats de Twitch, alertas, relojes y monitores de sistema, todo con transparencia real y sin afectar tus FPS.
 
-## 📦 Descargas (Releases)
-Puedes encontrar los instaladores en la sección de **Releases**:
-- **.deb**: Para Linux Mint, Ubuntu, Debian, Zorin.
-- **.AppImage**: Formato universal para cualquier distribución.
-- **.zip / .tar.gz**: Versiones portables sin instalación.
 
-## 🛠️ Instalación Rápida
-Si descargaste la versión portable:
-1. Dale permisos de ejecución a `start.sh`.
-2. Ejecuta `./start.sh`.
-3. ¡Listo! Se creará un acceso directo en tu escritorio.
 
-## 🔗 Sígueme
-- **Twitch:** [JexusLivee](https://www.twitch.tv/jexuslivee)
-- **Facebook:** [AlieykerJx](https://www.facebook.com/AlieykerJx1/)
+## 🐧 Compatibilidad Certificada
+Probado y funcionando al 100% en:
+- ✅ **Linux Mint 22.2** (Nativo)
+- ✅ **Zorin OS 17** (¡Confirmado!)
+- ✅ **Ubuntu 24.04 / 22.04**
+- ✅ **Debian / LMDE**
 
----
-Desarrollado con ❤️ para la comunidad Linux.
+## 📦 Instalación
+### 1. Método Pro (Recomendado)
+Descarga el archivo `.deb` desde [Releases](https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases) e instala con:
+```bash
+sudo dpkg -i GhostWidgetsPro_V1.2(Estable).deb
+sudo apt install -f
