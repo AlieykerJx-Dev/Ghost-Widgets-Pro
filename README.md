@@ -28,6 +28,9 @@ Bash
 
 sudo dpkg -i "GhostWidgetsPro_V1.2(Estable).deb"
 sudo apt install -f
+
+···
+
 2. Método Universal (AppImage)
 Ideal para cualquier distribución. Solo descarga, da permisos y ejecuta:
 
@@ -35,6 +38,12 @@ Bash
 
 chmod +x "GhostWidgetsPro_V1.2(_86_64).AppImage"
 ./"GhostWidgetsPro_V1.2(_86_64).AppImage"
+
+
+
+···· 
+
+
 ✨ Características de la v1.2
 ⚙️ Motor Ultraligero: Basado en flags de Chromium optimizados para bajo consumo de CPU/RAM.
 
