@@ -14,7 +14,7 @@ os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = (
     "--num-raster-threads=1"
 )
 
-# --- LÓGICA DE PORTABILIDAD 10,000,000% ---
+# --- LÓGICA DE PORTABILIDAD MAESTRA ---
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
 os.chdir(BASE_DIR)
@@ -41,7 +41,6 @@ class OverlayWidget(QWidget):
         lay = QVBoxLayout(self); lay.setContentsMargins(0,0,0,0); lay.addWidget(self.web)
 
         u = data['url']
-        # Si la ruta es local, asegurar que sea absoluta para el motor web
         target_url = QUrl.fromLocalFile(os.path.abspath(u)) if os.path.exists(u) else QUrl(u if "://" in u else "http://"+u)
         self.web.setUrl(target_url)
         self.setGeometry(data.get('x', 100), data.get('y', 100), data.get('w', 400), data.get('h', 300))
@@ -98,10 +97,11 @@ class GhostManager(QWidget):
 
     def render_content(self):
         while self.main_container.count():
-            item = self.main_container.takeAt(0)
-            if item.widget(): item.widget().deleteLater()
+            child = self.main_container.takeAt(0)
+            if child.widget(): child.widget().deleteLater()
+            elif child.layout(): self.clear_layout(child.layout())
 
-        t = TRAD[self.st['lang']]
+        with open(os.path.join(BASE_DIR, "config", "strings.json"), "r") as f: translations = json.load(f); t = translations[self.st["lang"]]
         if self.st.get("bg"): self.apply_bg(self.st["bg"])
 
         header = QLabel()
@@ -109,40 +109,61 @@ class GhostManager(QWidget):
             header.setPixmap(QPixmap(HEADER_PATH).scaledToWidth(410, Qt.SmoothTransformation))
         header.setAlignment(Qt.AlignCenter); self.main_container.addWidget(header)
 
-        self.lbl_stats = QLabel("CARGANDO..."); self.lbl_stats.setStyleSheet("color: #00ff00; font-family: 'Consolas';")
-        self.main_container.addWidget(self.lbl_stats)
+        # MARCO DE ESTADÍSTICAS PRO
+        self.stats_frame = QFrame()
+        self.stats_frame.setStyleSheet("background: rgba(0,0,0,220); border: 2px solid #00ff00; border-radius: 10px;")
+        self.stats_frame.setFixedHeight(50)
+        s_lay = QHBoxLayout(self.stats_frame)
+        self.lbl_stats = QLabel("CARGANDO..."); self.lbl_stats.setAlignment(Qt.AlignCenter)
+        self.lbl_stats.setStyleSheet("color: #00ff00; font-family: 'Consolas'; font-size: 13px; font-weight: bold; border: none;")
+        s_lay.addWidget(self.lbl_stats); self.main_container.addWidget(self.stats_frame)
 
-        self.list = QListWidget(); self.main_container.addWidget(self.list)
+        self.list = QListWidget()
+        self.list.setStyleSheet("QListWidget { background: rgba(0,0,0,160); border-radius: 12px; border: 1px solid #333; }")
+        self.main_container.addWidget(self.list)
 
-        btn_lay = QHBoxLayout()
-        btn_lay.addWidget(self.create_btn(t["add"], self.add_w, "#000", "#00ff00"))
-        btn_lay.addWidget(self.create_btn(t["set"], self.open_settings, "#000", "#00ff00"))
-        self.main_container.addLayout(btn_lay)
+        # BOTONES DE CONTROL (START/STOP ALL)
+        ctrl_lay = QVBoxLayout()
+        row1 = QHBoxLayout()
+        row1.addWidget(self.create_btn(t["start_all"], self.start_all_w, "#111", "#00ff00"))
+        row1.addWidget(self.create_btn(t["stop_all"], self.stop_all_w, "#111", "#ff4d4d"))
+        row2 = QHBoxLayout()
+        row2.addWidget(self.create_btn(t["add"], self.add_w, "#000", "#00ff00", pro=True))
+        row2.addWidget(self.create_btn(t["set"], self.open_settings, "#000", "#00ff00", pro=True))
+        ctrl_lay.addLayout(row1); ctrl_lay.addLayout(row2)
+        self.main_container.addLayout(ctrl_lay)
+
+        # FOOTER CON REDES SOCIALES
+        footer = QVBoxLayout()
+        follow = QLabel(t["follow"]); follow.setStyleSheet("color: #00ff00; font-size: 10px; font-weight: bold;"); follow.setAlignment(Qt.AlignCenter)
+        links = QHBoxLayout()
+        fb = QLabel("<a href='https://www.facebook.com/AlieykerJx1/' style='color:#00ff00; text-decoration:none;'>FACEBOOK</a>")
+        tw = QLabel("<a href='https://www.twitch.tv/jexuslivee' style='color:#00ff00; text-decoration:none;'>TWITCH</a>")
+        for l in [fb, tw]: l.setOpenExternalLinks(True); l.setAlignment(Qt.AlignCenter); links.addWidget(l)
+        footer.addWidget(follow); footer.addLayout(links)
+        self.main_container.addLayout(footer)
+
         self.refresh_list()
 
-    def create_btn(self, text, func, bg, col):
+    def create_btn(self, text, func, bg, col, pro=False):
         btn = QPushButton(text); btn.clicked.connect(func)
-        btn.setStyleSheet(f"background: {bg}; color: {col}; border: 2px solid {col}; border-radius: 8px; padding: 10px; font-weight: bold;")
+        p = "14px" if pro else "10px"
+        btn.setStyleSheet(f"QPushButton{{background: {bg}; color: {col}; border: 2px solid {col}; border-radius: 8px; font-weight: bold; padding: {p};}} QPushButton:hover{{background: {col}; color: #000;}}")
         return btn
 
     def refresh_list(self):
-        self.list.clear()
+        self.list.clear(); with open(os.path.join(BASE_DIR, "config", "strings.json"), "r") as f: translations = json.load(f); t = translations[self.st["lang"]]
         for i, d in enumerate(self.widgets_data):
             item = QListWidgetItem(self.list); w = QWidget(); l = QHBoxLayout(w)
-            active = i in self.active_widgets
-            btn = QPushButton("STOP" if active else "START")
+            active, editing = i in self.active_widgets, self.edit_states.get(i, False)
+            btn = QPushButton("STOP" if active else "START"); btn.setFixedSize(70, 32)
+            btn.setStyleSheet(f"background: {'#ff4d4d' if active else '#2ecc71'}; color: white; border-radius: 6px; font-weight: bold;")
             btn.clicked.connect(lambda _, x=i: self.toggle_widget(x))
-            l.addWidget(QLabel(d['nombre'])); l.addStretch(); l.addWidget(btn)
+            mv = QPushButton(t["done"] if editing else t["move"]); mv.setFixedSize(70, 32)
+            mv.setStyleSheet(f"background: {'#00ff00' if editing else '#f1c40f'}; color: black; border-radius: 6px; font-weight: bold;")
+            mv.setEnabled(active); mv.clicked.connect(lambda _, x=i: self.toggle_edit(x))
+            l.addWidget(QLabel(f"<b style='color:white;'>{d['nombre']}</b>")); l.addStretch(); l.addWidget(btn); l.addWidget(mv)
             item.setSizeHint(w.sizeHint()); self.list.setItemWidget(item, w)
-
-    def add_w(self):
-        t = TRAD[self.st['lang']]
-        name, ok1 = QInputDialog.getText(self, t["add"], t["w_name"]+":")
-        if ok1 and name:
-            url, ok2 = QInputDialog.getText(self, t["add"], t["w_url"]+":")
-            if ok2 and url:
-                self.widgets_data.append({"nombre": name, "url": url, "x": 100, "y": 100, "w": 400, "h": 300, "active": False})
-                self.save_all(); self.refresh_list()
 
     def toggle_widget(self, i):
         if i in self.active_widgets:
@@ -153,19 +174,41 @@ class GhostManager(QWidget):
             self.widgets_data[i]["active"] = True
         self.save_all(); self.refresh_list(); gc.collect()
 
+    def toggle_edit(self, i):
+        curr = self.edit_states.get(i, False)
+        self.edit_states[i] = not curr
+        self.active_widgets[i].set_edit_mode(not curr)
+        self.refresh_list()
+
+    def start_all_w(self):
+        for i in range(len(self.widgets_data)):
+            if i not in self.active_widgets: self.toggle_widget(i)
+
+    def stop_all_w(self):
+        for i in list(self.active_widgets.keys()): self.toggle_widget(i)
+
+    def add_w(self):
+        with open(os.path.join(BASE_DIR, "config", "strings.json"), "r") as f: translations = json.load(f); t = translations[self.st["lang"]]
+        name, ok1 = QInputDialog.getText(self, t["add"], t["w_name"]+":")
+        if ok1 and name:
+            url, ok2 = QInputDialog.getText(self, t["add"], t["w_url"]+":")
+            if ok2 and url:
+                self.widgets_data.append({"nombre": name, "url": url, "x": 100, "y": 100, "w": 400, "h": 300, "active": False})
+                self.save_all(); self.refresh_list()
+
     def update_stats(self):
-        try: self.lbl_stats.setText(f"CPU: {psutil.cpu_percent()}% | RAM: {psutil.virtual_memory().percent}%")
+        with open(os.path.join(BASE_DIR, "config", "strings.json"), "r") as f: translations = json.load(f); t = translations[self.st["lang"]]
+        try: self.lbl_stats.setText(f"CPU: {psutil.cpu_percent()}% | RAM: {psutil.virtual_memory().percent}% | {t['act']}: {len(self.active_widgets)}")
         except: pass
 
     def apply_bg(self, path):
-        # Convertir a ruta absoluta para visualización si es relativa
         full_path = path if os.path.isabs(path) else os.path.join(BASE_DIR, path)
         if os.path.exists(full_path):
             pix = QPixmap(full_path).scaled(self.size(), Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
             pal = self.palette(); pal.setBrush(QPalette.Window, QBrush(pix)); self.setPalette(pal)
 
     def open_settings(self):
-        t = TRAD[self.st['lang']]; dlg = QDialog(self); l = QVBoxLayout(dlg)
+        with open(os.path.join(BASE_DIR, "config", "strings.json"), "r") as f: translations = json.load(f); t = translations[self.st["lang"]]; dlg = QDialog(self); l = QVBoxLayout(dlg)
         btn_bg = QPushButton("Cambiar Fondo"); btn_bg.clicked.connect(self.pick_bg); l.addWidget(btn_bg)
         cmb = QComboBox(); cmb.addItems(["es", "en", "pt"]); cmb.setCurrentText(self.st['lang']); l.addWidget(cmb)
         btn_ok = QPushButton(t["save"]); btn_ok.clicked.connect(lambda: self.apply_set(cmb.currentText(), dlg)); l.addWidget(btn_ok)
@@ -174,7 +217,6 @@ class GhostManager(QWidget):
     def pick_bg(self):
         path, _ = QFileDialog.getOpenFileName(self, "Fondo", BASE_DIR, "Images (*.png *.jpg *.jpeg)")
         if path:
-            # SI LA IMAGEN ESTÁ EN LA APP, GUARDAR RUTA RELATIVA PARA PORTABILIDAD
             if BASE_DIR in path: path = os.path.relpath(path, BASE_DIR)
             self.st['bg'] = path; self.apply_bg(path); self.save_all()
 
@@ -186,6 +228,12 @@ class GhostManager(QWidget):
         self.tray.setIcon(QIcon(ICON_PATH) if os.path.exists(ICON_PATH) else self.style().standardIcon(60))
         m = QMenu(); m.addAction("Abrir", self.show); m.addAction("Salir", QApplication.quit)
         self.tray.setContextMenu(m); self.tray.show()
+
+    def clear_layout(self, layout):
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget(): child.widget().deleteLater()
+            elif child.layout(): self.clear_layout(child.layout())
 
     def closeEvent(self, event):
         event.ignore(); self.hide()
